@@ -1,46 +1,46 @@
 package com.practice.rest_crud_app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.practice.rest_crud_app.dao.EmployeeDAO;
+import com.practice.rest_crud_app.dao.EmployeeRespository;
 import com.practice.rest_crud_app.entity.Employee;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
-	private EmployeeDAO employeeDAO;
+	private EmployeeRespository employeeRepository;
 	
 	@Autowired
-	public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
-		this.employeeDAO = employeeDAO;
+	public EmployeeServiceImpl(EmployeeRespository employeeRepository) {
+		this.employeeRepository = employeeRepository;
 	}
 
 	@Override
 	public List<Employee> getAllEmployees() {
 		// TODO Auto-generated method stub
-		return employeeDAO.findAll();
+		return employeeRepository.findAll();
 	}
 
 	@Override
 	public Employee findById(int id) {
-		return employeeDAO.findById(id);
+		Optional<Employee> emp = employeeRepository.findById(id);
+		return emp.get();
 	}
 
 	@Override
-	@Transactional
 	public Employee save(Employee emp) {
 		// TODO Auto-generated method stub
-		return employeeDAO.save(emp);
+		return employeeRepository.save(emp);
 	}
 
 	@Override
-	@Transactional
 	public void delete(int id) {
-		employeeDAO.delete(id);
+		employeeRepository.deleteById(id);
 	}
 
 }
